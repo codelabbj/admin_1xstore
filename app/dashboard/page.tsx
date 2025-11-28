@@ -51,7 +51,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Tableau de Bord</h2>
-        <p className="text-muted-foreground">Bienvenue sur le tableau de bord administrateur Africash</p>
+        <p className="text-muted-foreground">Bienvenue sur le tableau de bord administrateur 1xstore</p>
       </div>
 
       {isError && (

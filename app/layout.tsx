@@ -10,8 +10,8 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Tableau de Bord Admin Africash",
-  description: "Tableau de bord administrateur pour la plateforme Africash",
+  title: "Tableau de Bord Admin 1xstore",
+  description: "Tableau de bord administrateur pour la plateforme 1xstore",
 }
 
 export default function RootLayout({
