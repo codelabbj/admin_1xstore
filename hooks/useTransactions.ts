@@ -160,3 +160,25 @@ export function useChangeTransactionStatus() {
     },
   })
 }
+
+export function useCheckTransactionStatus() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (reference: string) => {
+      const res = await api.get(`/mobcash/show-transaction-status`, {
+        params: { reference }
+      })
+      return res.data
+    },
+    onSuccess: (data: any) => {
+      const status = data?.status || data?.transaction_status || 'Unknown'
+      const message = data?.message || `Transaction status: ${status}`
+      toast.success(message)
+      queryClient.invalidateQueries({ queryKey: ["transactions"] })
+    },
+    onError: (error: any) => {
+      toast.error(`Failed to check transaction status: ${error?.response?.data?.message || error.message}`)
+    },
+  })
+}

@@ -23,6 +23,9 @@ export interface Settings {
   mtn_default_link: string | null
   telegram: string | null
   moov_marchand_phone: string | null
+  orange_marchand_phone: string | null
+  bf_orange_marchand_phone: string | null
+  bf_moov_marchand_phone: string | null
 }
 
 export type SettingsInput = Omit<Settings, "id">

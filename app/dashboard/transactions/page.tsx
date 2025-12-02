@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTransactions, type Transaction, type TransactionFilters } from "@/hooks/useTransactions"
+import { useTransactions, type Transaction, type TransactionFilters, useCheckTransactionStatus } from "@/hooks/useTransactions"
 import { useNetworks } from "@/hooks/useNetworks"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { Loader2, Plus, Search, RefreshCw, Copy } from "lucide-react"
 import { toast } from "react-hot-toast"
 import { CreateTransactionDialog } from "@/components/create-transaction-dialog"
 import { ChangeStatusDialog } from "@/components/change-status-dialog"
+import { CheckStatusDialog } from "@/components/check-status-dialog"
 
 export default function TransactionsPage() {
   const [filters, setFilters] = useState<TransactionFilters>({
@@ -26,11 +27,22 @@ export default function TransactionsPage() {
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
   const [statusDialogOpen, setStatusDialogOpen] = useState(false)
+  const [checkStatusDialogOpen, setCheckStatusDialogOpen] = useState(false)
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
 
   const handleChangeStatus = (transaction: Transaction) => {
     setSelectedTransaction(transaction)
     setStatusDialogOpen(true)
+  }
+
+  const handleCheckStatus = (transaction: Transaction) => {
+    setSelectedTransaction(transaction)
+    setCheckStatusDialogOpen(true)
+  }
+
+  const shouldShowCheckStatus = (status: string): boolean => {
+    const checkableStatuses = ["pending", "fail", "failed", "timeout"]
+    return checkableStatuses.includes(status.toLowerCase())
   }
 
   const getStatusColor = (status: string) => {
@@ -315,10 +327,22 @@ export default function TransactionsPage() {
                       </TableCell>
                       <TableCell>{new Date(transaction.created_at).toLocaleDateString()}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" onClick={() => handleChangeStatus(transaction)}>
-                          <RefreshCw className="h-4 w-4 mr-1" />
-                          Changer Statut
-                        </Button>
+                        <div className="flex gap-2 justify-end">
+                          {shouldShowCheckStatus(transaction.status) && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleCheckStatus(transaction)}
+                            >
+                              <RefreshCw className="h-4 w-4 mr-1" />
+                              Vérifier Statut
+                            </Button>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => handleChangeStatus(transaction)}>
+                            <RefreshCw className="h-4 w-4 mr-1" />
+                            Changer Statut
+                          </Button>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -359,6 +383,11 @@ export default function TransactionsPage() {
       <ChangeStatusDialog
         open={statusDialogOpen}
         onOpenChange={setStatusDialogOpen}
+        transaction={selectedTransaction}
+      />
+      <CheckStatusDialog
+        open={checkStatusDialogOpen}
+        onOpenChange={setCheckStatusDialogOpen}
         transaction={selectedTransaction}
       />
     </div>
