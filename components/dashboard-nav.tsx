@@ -31,7 +31,7 @@ const navItems = [
   { href: "/dashboard/transactions", label: "Transactions", icon: ArrowLeftRight },
   { href: "/dashboard/bot-transactions", label: "Transactions Bot", icon: Bot },
   { href: "/dashboard/platforms", label: "Plateformes", icon: Layers },
-  { href: "/dashboard/deposits", label: "Dépôts & Caisses", icon: Wallet },
+  // { href: "/dashboard/deposits", label: "Dépôts & Caisses", icon: Wallet },
   { href: "/dashboard/coupons", label: "Coupons", icon: Ticket },
   { href: "/dashboard/advertisements", label: "Annonces", icon: Megaphone },
   { href: "/dashboard/settings", label: "Paramètres", icon: Settings },

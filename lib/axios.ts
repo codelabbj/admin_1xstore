@@ -73,19 +73,29 @@ api.interceptors.response.use(
       }
     }
 
-    // 🌍 Smart language-aware error display
+    // 🌍 Smart language-aware error display with default French messages for specific errors
     const userLang = navigator.language.startsWith("fr") ? "fr" : "en"
     const fallback =
       userLang === "fr"
         ? "Une erreur est survenue. Veuillez réessayer."
         : "An unexpected error occurred. Please try again."
 
-    const backendMsg =
+    let backendMsg =
       error.response?.data?.details ||
       error.response?.data?.detail ||
       error.response?.data?.error ||
       error.response?.data?.message ||
       (typeof error.response?.data === "string" ? error.response.data : fallback)
+
+    // Handle specific status codes with default French messages
+    if (error.response?.status >= 500) {
+      backendMsg = "Erreur interne du serveur. Veuillez réessayer plus tard."
+    } else if (error.response?.status === 404) {
+      backendMsg = "Ressource non trouvée. Veuillez vérifier vos données."
+    } else if (!error.response || !error.response.status) {
+      // Unrecognized errors (no response or status)
+      backendMsg = "Erreur de connexion. Veuillez vérifier votre connexion internet."
+    }
 
     const backendLang = detectLang(backendMsg)
 
