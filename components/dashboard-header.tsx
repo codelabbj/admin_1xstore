@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { LogOut, User, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function DashboardHeader() {
   const logout = useLogout()
@@ -32,9 +33,12 @@ export function DashboardHeader() {
   return (
     <header className="sticky top-0 z-10 border-b border-primary/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm shadow-primary/5">
       <div className="flex h-16 items-center justify-between px-6">
-        <div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">1xstore Admin</h1>
-          <p className="text-sm text-muted-foreground">Gérez votre plateforme</p>
+        <div className="flex items-center gap-4">
+          <SidebarTrigger />
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">1xstore Admin</h1>
+            <p className="text-sm text-muted-foreground">Gérez votre plateforme</p>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
