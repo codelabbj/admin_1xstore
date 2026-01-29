@@ -13,7 +13,7 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex-1 flex flex-col w-full">
         <DashboardHeader />
         <div className="flex flex-1">
           <Sidebar className="border-r border-primary/20 bg-gradient-to-b from-sidebar to-sidebar/95 shadow-lg shadow-primary/5">
