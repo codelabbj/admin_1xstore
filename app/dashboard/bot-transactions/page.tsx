@@ -10,10 +10,18 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, Plus, Search, RefreshCw, Copy } from "lucide-react"
+import { Loader2, Plus, Search, RefreshCw, Copy, MoreHorizontal } from "lucide-react"
 import { toast } from "react-hot-toast"
 import { CreateBotTransactionDialog } from "@/components/create-bot-transaction-dialog"
 import { ChangeBotStatusDialog } from "@/components/change-bot-status-dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function BotTransactionsPage() {
   const [filters, setFilters] = useState<BotTransactionFilters>({
@@ -322,10 +330,22 @@ export default function BotTransactionsPage() {
                       </TableCell>
                       <TableCell>{new Date(transaction.created_at).toLocaleDateString()}</TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" onClick={() => handleChangeStatus(transaction)}>
-                          <RefreshCw className="h-4 w-4 mr-1" />
-                          Changer Statut
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">Ouvrir le menu</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => handleChangeStatus(transaction)}>
+                              <RefreshCw className="h-4 w-4 mr-2" />
+                              Changer Statut
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </TableCell>
                     </TableRow>
                   ))}
